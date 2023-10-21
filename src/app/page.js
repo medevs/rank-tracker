@@ -1,3 +1,16 @@
+import DomainRow from "@/components/DomainRow";
+import DoubleHeader from "@/components/DoubleHeader";
+import NewDomainForm from "@/components/NewDomainForm";
+
 export default function Home() {
-  return <h1>Home</h1>;
+  return (
+    <div>
+      <NewDomainForm />
+      <DoubleHeader
+        preTitle={"domain names"}
+        mainTitle={"4 domains"}
+      />
+      <DomainRow />
+    </div>
+  );
 }
