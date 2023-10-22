@@ -1,16 +1,20 @@
-/* eslint-disable @next/next/no-img-element */
+import Image from "next/image";
+import Link from "next/link";
 
-export default function DomainRow() {
+export default function DomainRow({ owner, domain, icon }) {
   return (
     <div className="flex gap-2 bg-white border border-blue-200 border-b-4 rounded-lg items-center my-3">
-      <img src="" className="h-12 ml-4 my-4" alt="img" />
+      {icon && (
+        <Image width={48} height={48} alt={domain} src={icon} className="h-12 ml-4 my-4" />
+      )}
       <div className="grow pl-2">
-        link...
-        <span>Keyword 1</span>
-        <span>Keyword 2</span>
-        <span>Keyword 3</span>
+        <Link
+          href={"/domains/" + domain}
+          className="font-bold text-xl leading-5 block"
+        >
+          {domain}
+        </Link>
       </div>
-      <div className="pt-2">chart</div>
     </div>
   );
 }
