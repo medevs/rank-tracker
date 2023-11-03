@@ -1,8 +1,9 @@
 "use client";
+
 import DomainRow from "@/components/DomainRow";
 import DoubleHeader from "@/components/DoubleHeader";
 
-export default function DomainsList({ domains }) {
+export default function DomainsList({ domains, keywords }) {
   return (
     <div>
       <DoubleHeader
@@ -13,6 +14,7 @@ export default function DomainsList({ domains }) {
         <DomainRow
           key={domainDoc._id}
           {...domainDoc}
+          keywords={keywords.filter((k) => k.domain === domainDoc.domain)}
         />
       ))}
     </div>

@@ -62,7 +62,7 @@ export async function POST(req) {
 /**
  * @author /medevs
  * Retrieves data from a MongoDB database and returns it as a JSON response.
- * 
+ *
  * @returns {Promise<Object>} A JSON response containing the retrieved domains, keywords, and results.
  */
 export async function GET() {
@@ -70,14 +70,22 @@ export async function GET() {
   const session = await getServerSession(authOptions);
   const email = session.user?.email;
   const domains = await Domain.find({ owner: email });
-  return Response.json({ domains });
+  const keywords = await Keyword.find({
+    owner: email,
+    domain: domains.map((doc) => doc.domain),
+  });
+  const results = await Result.find({
+    domain: domains.map((doc) => doc.domain),
+    keyword: keywords.map((doc) => doc.keyword),
+  });
+  return Response.json({ domains, keywords, results });
 }
 
 export async function DELETE(req) {
   mongoose.connect(process.env.MONGODB_URI);
   const url = new URL(req.url);
-  const domain = url.searchParams.get('domain');
+  const domain = url.searchParams.get("domain");
   const session = await getServerSession(authOptions);
-  await Domain.deleteOne({owner:session.user?.email,domain});
+  await Domain.deleteOne({ owner: session.user?.email, domain });
   return Response.json(true);
 }
